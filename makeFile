@@ -1,0 +1,37 @@
+
+#file: Makefile
+CC = gcc
+CFLAGS = -Wall -g
+LDFLAGS = ar
+
+
+myBank: libmyBank.a
+
+mymathd: libmyBank.so
+
+mains:main.o libmyBank.a
+$(CC) $(CFLAG) -o mains main.o libmyBank.a
+
+maind:main.o
+$(CC) $(CFLAG) -o maind main.o ./libmyBank.so
+
+libmyBank.so:myBank.o myBank.h
+$(CC) $(CFLAG) -shared -o libmyMath.so power.o basicMath.o
+
+libmyBank.a:myBank.o myBank.h
+$(AR) -rcs libmyBank.a myBank.o 
+
+main.o:main.c myBank.h
+$(CC) $(CFLAG) -c main.c
+
+clean:
+rm -f *.o *.a *.so mains maind
+echo clean done
+
+all:mymathd mymaths maind mains
+
+.PHONY: clean all
+
+
+
+#code
